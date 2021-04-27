@@ -8,15 +8,15 @@
 
 import UIKit
 
-class TradePassword: UIView {
+open class TradePassword: UIView {
     
-    enum ClosureEvent {
+    public enum ClosureEvent {
         case submit
         case close
         case forgetPwd
     }
     
-    static func show(completion: @escaping (ClosureEvent, String) -> Void) {
+    static public func show(completion: @escaping (ClosureEvent, String) -> Void) {
         let v = TradePassword(frame: UIScreen.main.bounds)
         v.tradeInputView.completion = {[weak v] text in
             v?.removeFromSuperview()
@@ -27,7 +27,7 @@ class TradePassword: UIView {
         UIApplication.shared.windows.first?.addSubview(v)
     }
     
-    var closure: ((ClosureEvent, String) -> Void)?
+    public var closure: ((ClosureEvent, String) -> Void)?
     
     private lazy var topView: UIButton = {
         let btn = UIButton()
@@ -88,7 +88,7 @@ class TradePassword: UIView {
         configUI()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         
         configUI()
@@ -115,7 +115,7 @@ class TradePassword: UIView {
         contentView.addSubview(forgetPwdButton)
     }
     
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         topView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -151,10 +151,10 @@ class TradePassword: UIView {
     }
 }
 
-class TextEntryView: UIView, UITextFieldDelegate {
+open class TextEntryView: UIView, UITextFieldDelegate {
     
-    var completion: ((String) -> Void)?
-    var isSecureTextEntry = true
+    public var completion: ((String) -> Void)?
+    public var isSecureTextEntry = true
     
     private var textField: UITextField = {
         let tf = UITextField()
@@ -191,13 +191,13 @@ class TextEntryView: UIView, UITextFieldDelegate {
         configUI()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         
         configUI()
     }
     
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         textField.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -254,7 +254,7 @@ class TextEntryView: UIView, UITextFieldDelegate {
         }
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text as NSString? else { return true }
         return text.replacingCharacters(in: range, with: string).count <= 6
     }
